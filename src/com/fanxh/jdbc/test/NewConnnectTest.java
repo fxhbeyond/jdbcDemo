@@ -4,6 +4,8 @@ import com.fanxh.jdbc.utils.NewConnnect;
 import org.junit.Test;
 
 import java.sql.Connection;
+import java.sql.Date;
+import java.sql.ResultSet;
 import java.sql.Statement;
 
 /**
@@ -31,4 +33,25 @@ public class NewConnnectTest {
         conn.close();
     }
 
+    @Test
+    public void testQuery() throws Exception {
+        Connection conn = nc.getConnect1();
+        String sql = "select * from customer";
+        Statement statement = conn.createStatement();
+        ResultSet rs = statement.executeQuery(sql);
+        while(rs.next()){
+            int id = rs.getInt(1);
+            String name = rs.getString("name");
+            String email = rs.getString("email");
+            Date birth = rs.getDate("birth");
+            System.out.println(id);
+            System.out.println(email);
+            System.out.println(name);
+            System.out.println(birth);
+        }
+        rs.close();
+        statement.close();
+
+        conn.close();
+    }
 }
